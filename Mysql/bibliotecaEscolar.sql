@@ -68,12 +68,12 @@ VALUES
 ('Viagem ao Centro da Terra', 1, 'Aventura épica');
 
 
--- registro: o cliente 1 (João Pedro) pegou o livro 1 (volta ao mundo)
+-- registro: o cliente 1 (Leo Zorzi) pegou o livro 1 (volta ao mundo)
 INSERT INTO clientes (matricula, nome) 
 VALUES 
-(2024001, 'João Pedro');
+(2024001, 'Leo Zorzi');
     
--- registro: o cliente 1 (João Pedro) pegou o livro 2 (vinte mil léguas)
+-- registro: o cliente 1 (Leo Zorzi) pegou o livro 2 (vinte mil léguas)
 INSERT INTO emprestimos (id_cliente, id_livro) VALUES (1, 2);
 
 -- consulta para verificar os livros cadastrados

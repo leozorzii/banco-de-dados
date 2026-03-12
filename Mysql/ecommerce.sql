@@ -143,7 +143,7 @@ with resumo_vendas as(
     group by id_produto
 )
 
--- consultando a CTE como se fosse uma tebela real --
+-- consultando a CTE como se fosse uma tbela real --
 select 
 	p.nome,
     rv.total_unidades,
