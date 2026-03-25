@@ -1,170 +1,80 @@
--- 1. Criação do Banco de Dados
-CREATE DATABASE IF NOT EXISTS ecommerce_db;
+DROP DATABASE IF EXISTS biblioteca; 
+CREATE DATABASE biblioteca;
+USE biblioteca;
 
-USE ecommerce_db;
-
--- 2. Tabela de Categorias (Evita repetir nomes de categorias nos produtos)
-CREATE TABLE IF NOT EXISTS categorias (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT
-);
-
--- 3. Tabela de Clientes
-CREATE TABLE IF NOT EXISTS clientes (
+-- entidade independente
+CREATE TABLE clientes(
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    cpf CHAR(11) UNIQUE NOT NULL,
+    matricula INT UNIQUE, -- matricula não pode repetir
+    nome VARCHAR(100) NOT NULL, -- nome do cliente é obrigatório
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Tabela de Produtos (FK para categorias)
-CREATE TABLE IF NOT EXISTS produtos (
-    id_produto INT AUTO_INCREMENT PRIMARY KEY,
-    id_categoria INT,
-    nome VARCHAR(150) NOT NULL,
-    preco DECIMAL(10, 2) NOT NULL,
-    estoque INT DEFAULT 0,
-    CONSTRAINT fk_produto_categoria FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
+--  evita repetir nome do autor no livro)
+CREATE TABLE autores(
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
 );
 
--- 5. Tabela de Pedidos (FK para clientes)
-CREATE TABLE IF NOT EXISTS pedidos (
-    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT,
-    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('Pendente', 'Pago', 'Enviado', 'Cancelado') DEFAULT 'Pendente',
-    total_pedido DECIMAL(10, 2),
-    CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+-- aplicação que evita repetir 'romance', 'ficção' várias vezes)
+CREATE TABLE categorias(
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nome_categoria VARCHAR(50) NOT NULL
 );
 
--- 6. Tabela de Itens do Pedido (Tabela de Relacionamento N:N entre Pedidos e Produtos)
--- Esta tabela é essencial para a normalização, permitindo que um pedido tenha vários produtos.
-CREATE TABLE IF NOT EXISTS itens_pedido (
-    id_item INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT,
-    id_produto INT,
-    quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10, 2) NOT NULL,
-    CONSTRAINT fk_item_pedido FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido),
-    CONSTRAINT fk_item_produto FOREIGN KEY (id_produto) REFERENCES produtos(id_produto)
+-- livros relaciona com Autor e Categoria)
+CREATE TABLE livros(
+    id_livro INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL UNIQUE,
+    id_autor INT, -- o que relaciona o livro com o autor
+    id_categoria INT, -- Novo relacionamento
+    descricao TEXT,
+    -- o que garante que o autor e a categoria existam antes de criar o livro
+    CONSTRAINT fk_livro_autor FOREIGN KEY (id_autor) REFERENCES autores(id_autor),
+    CONSTRAINT fk_livro_categoria FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
+-- relacionamento N pra N entre Cliente e Livro 
+CREATE TABLE emprestimos(
+     id_emprestimo INT AUTO_INCREMENT PRIMARY KEY,
+     id_cliente INT, -- o que relaciona o empréstimo com o cliente
+     id_livro INT, -- o que relaciona o empréstimo com o livro
+     data_emprestimo DATETIME DEFAULT CURRENT_TIMESTAMP,
+     status ENUM('Ativo', 'Devolvido') DEFAULT 'Ativo',
+     -- o que garante que o cliente e o livro existam antes de criar o empréstimo
+     CONSTRAINT fk_cliente FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+     CONSTRAINT fk_livro FOREIGN KEY (id_livro) REFERENCES livros(id_livro)
+);
 
+-- inserção de dados
+INSERT INTO autores (nome) 
+VALUES 
+('Julio Verne'),
+('Joana Darc'),
+('Machado de Assis');
 
--- A. Cadastrando Categorias e Clientes (As bases)
-INSERT INTO categorias (nome, descricao) 
+-- primeiro as categorias depois os livros, pq o livro tem um relacionamento com a categoria
+INSERT INTO categorias (nome_categoria) 
+VALUES 
+('Aventura'), 
+('Ficção Científica'), 
+('Clássico');
+
+-- numero '1' pq foi o ID gerado para o Julio Verne acima   
+INSERT INTO livros (titulo, id_autor, descricao) 
 VALUES
-('Eletrônicos', 'Produtos de tecnologia e hardware'),
-('Livros', 'Livros físicos e digitais');
-
-INSERT INTO clientes (nome, email, cpf) 
-VALUES
-('Ana Souza', 'ana.souza@email.com', '12345678501'),
-('Carlos Lima', 'carlos.lima@email.com', '98765332100');
+('Volta ao mundo em 80 dias', 1, 'Romance e aventura'),
+('Vinte mil léguas submarinas', 1, 'Ficção científica'),
+('Viagem ao Centro da Terra', 1, 'Aventura épica');
 
 
--- B. Cadastrando Produtos (Referenciando o ID da categoria)
--- Supondo que 'Eletrônicos' seja ID 1 e 'Livros' seja ID 2
-INSERT INTO produtos (id_categoria, nome, preco, estoque) 
-VALUES
-(1, 'Smartphone X', 2500.00, 50),
-(2, 'O Guia do Mochileiro das Galáxias', 42.00, 100);
+-- registro: o cliente 1 (Leonardo Zorzi) pegou o livro 1 (volta ao mundo)
+INSERT INTO clientes (matricula, nome) 
+VALUES 
+(2024001, 'Leonardo Zorzi');
+    
+-- registro: o cliente 1 (Leonardo Zorzi) pegou o livro 2 (vinte mil léguas)
+INSERT INTO emprestimos (id_cliente, id_livro) VALUES (1, 2);
 
--- C. Criando um Pedido (Referenciando o ID do cliente)
-INSERT INTO pedidos (id_cliente, status, total_pedido) 
-VALUES
-(1, 'Pendente', 2542.00);
-
--- D. Adicionando Itens ao Pedido (Referenciando Pedido e Produto)
--- Aqui o aluno vê a normalização na prática: o item liga o pedido ao produto
-INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) 
-VALUES
-(1, 1, 1, 2500.00), -- 1 Smartphone
-(1, 2, 1, 42.00);    -- 1 Livro
-
-
-
--- em sequencia  
--- DROP TABLE itens_pedido;
--- DROP TABLE pedidos;
--- DROP TABLE produtos;
--- DROP TABLE clientes;
-
-UPDATE pedidos
-SET status = 'Pago'
-WHERE id_pedido = 1;
-
-update clientes
-set email = 'ana.nova@email.com'
-where id_cliente = 1;
-
-select nome, preco
-from produtos
-where preco > 100.00
-order by preco desc;
-
-select p.nome as Produto, c.nome as Categoria, p.preco
-from produtos p
-		inner join categorias c
-        on p.id_categoria = c.id_categoria;
-
-select cl.nome, sum(p.total_pedido) as total_gasto
-from clientes cl
-		left join pedidos p
-	on cl.id_cliente = p.id_cliente
-group by cl.id_cliente, cl_nome;
-
--- -------------
-select 
-	c.nome as Cliente,
-	pr.nome as Produto,
-    ip.quantidade,
-    ped.data_pedido
-from itens_pedido ip
-		 join pedidos ped
-	on ip.id_pedido = c.id_cliente
-	  join clientes c
-      on ped.id_cliente = c.id_cliente
-		join produtos pr
-	on ip.id_produto = pr.id_produto
-where ped.status = 'Pago';
-
--- --------
--- viwes temporarias 
-with resumo_vendas as(
-	-- essa é a view temporaria --
-    select 
-		id_produto,
-		sum(quantidade) as total_unidades,
-		sum(quantidade * preco_unitario) as receita_produto
-	from itens_pedido
-    group by id_produto
-)
-
--- consultando a CTE como se fosse uma tbela real --
-select 
-	p.nome,
-    rv.total_unidades,
-    rv.receita_produto
-from produtos p
-join (select 
-		id_produto,
-		sum(quantidade) as total_unidades,
-		sum(quantidade * preco_unitario) as receita_produto
-	from itens_pedido
-    group by id_produto
-    ) rv 
-    on p.id_produto = rv.id_produto
-where rv.total_unidades > 5;
-
--- ---
-
-select 
-	p.nome,
-    rv.total_unidades,
-    rv.receita_produto
-from produtos p
-join resumo_vendas rv on p.id_produto = rv.id_produto
-where rv.total_unidades > 5;
+-- consulta para verificar os livros cadastrados
+select * from livros;
