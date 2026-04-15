@@ -1,30 +1,30 @@
-# 📊 Banco de Dados & Data Science
+# 📊 Database & Data Science Studies
 
-Repositório de estudos pessoais e acadêmicos em banco de dados relacional e ciência de dados, desenvolvido durante a graduação em Sistemas de Informação.
+Personal and academic repository focused on relational databases and data science, developed during my Information Systems degree.
 
-## 🛠️ Tecnologias
+## 🛠️ Tech Stack
 
-- **PostgreSQL** — banco de dados relacional principal
-- **SQL** — consultas, funções, triggers e índices
-- **Python** — análise e manipulação de dados
+- **PostgreSQL** — primary relational database
+- **SQL** — queries, functions, triggers, and indexes
+- **Python** — data analysis and manipulation
 
-## 📚 Conteúdo
+## 📚 Content
 
-### Banco de Dados
-- Modelagem relacional
-- Consultas SQL (SELECT, JOIN, subqueries)
-- Funções e triggers em PostgreSQL
-- Índices e otimização de queries
+### Database
+- Relational modeling
+- SQL queries (SELECT, JOIN, subqueries)
+- PostgreSQL functions and triggers
+- Indexes and query optimization
 
 ### Data Science
-- Manipulação de dados com **Pandas**
-- Leitura e tratamento de arquivos JSON e CSV
-- Análise exploratória de dados
+- Data manipulation with **Pandas**
+- Reading and processing JSON and CSV files
+- Exploratory data analysis
 
-## 📖 Contexto Acadêmico
+## 📖 Academic Context
 
-Estudos desenvolvidos na disciplina de **Banco de Dados** e afins durante o curso de Sistemas de Informação na Universidade Franciscana (UFN).
+Studies developed in the **Database** and related courses during the Information Systems degree at Universidade Franciscana (UFN).
 
 ---
 
-> Desenvolvido por [Leonardo Zorzi](https://github.com/leozorzii)
+> Developed by [Leonardo Zorzi](https://github.com/leozorzii)
