@@ -1,0 +1,608 @@
+[
+  {
+    "data_iniSE": "2023-12-03",
+    "casos": 12,
+    "Rt": 0.8956774,
+    "media_movel": 14.0
+  },
+  {
+    "data_iniSE": "2023-11-26",
+    "casos": 15,
+    "Rt": 1.3083998,
+    "media_movel": 14.5
+  },
+  {
+    "data_iniSE": "2023-11-19",
+    "casos": 17,
+    "Rt": 1.2796742,
+    "media_movel": 17.5
+  },
+  {
+    "data_iniSE": "2023-11-12",
+    "casos": 7,
+    "Rt": 0.39376184,
+    "media_movel": 12.75
+  },
+  {
+    "data_iniSE": "2023-11-05",
+    "casos": 10,
+    "Rt": 0.49694207,
+    "media_movel": 12.25
+  },
+  {
+    "data_iniSE": "2023-10-29",
+    "casos": 23,
+    "Rt": 1.0596544,
+    "media_movel": 14.25
+  },
+  {
+    "data_iniSE": "2023-10-22",
+    "casos": 19,
+    "Rt": 0.8361636,
+    "media_movel": 14.75
+  },
+  {
+    "data_iniSE": "2023-10-15",
+    "casos": 20,
+    "Rt": 0.95918816,
+    "media_movel": 18.0
+  },
+  {
+    "data_iniSE": "2023-10-08",
+    "casos": 28,
+    "Rt": 1.5679613,
+    "media_movel": 22.5
+  },
+  {
+    "data_iniSE": "2023-10-01",
+    "casos": 19,
+    "Rt": 1.2697054,
+    "media_movel": 21.5
+  },
+  {
+    "data_iniSE": "2023-09-24",
+    "casos": 19,
+    "Rt": 1.5184487,
+    "media_movel": 21.5
+  },
+  {
+    "data_iniSE": "2023-09-17",
+    "casos": 14,
+    "Rt": 1.0417845,
+    "media_movel": 20.0
+  },
+  {
+    "data_iniSE": "2023-09-10",
+    "casos": 14,
+    "Rt": 0.63132066,
+    "media_movel": 16.5
+  },
+  {
+    "data_iniSE": "2023-09-03",
+    "casos": 5,
+    "Rt": 0.14117706,
+    "media_movel": 13.0
+  },
+  {
+    "data_iniSE": "2023-08-27",
+    "casos": 21,
+    "Rt": 0.43578437,
+    "media_movel": 13.5
+  },
+  {
+    "data_iniSE": "2023-08-20",
+    "casos": 37,
+    "Rt": 0.63831013,
+    "media_movel": 19.25
+  },
+  {
+    "data_iniSE": "2023-08-13",
+    "casos": 48,
+    "Rt": 0.7508421,
+    "media_movel": 27.75
+  },
+  {
+    "data_iniSE": "2023-08-06",
+    "casos": 63,
+    "Rt": 0.8754699,
+    "media_movel": 42.25
+  },
+  {
+    "data_iniSE": "2023-07-30",
+    "casos": 63,
+    "Rt": 0.65656126,
+    "media_movel": 52.75
+  },
+  {
+    "data_iniSE": "2023-07-23",
+    "casos": 67,
+    "Rt": 0.44652474,
+    "media_movel": 60.25
+  },
+  {
+    "data_iniSE": "2023-07-16",
+    "casos": 77,
+    "Rt": 0.36179325,
+    "media_movel": 67.5
+  },
+  {
+    "data_iniSE": "2023-07-09",
+    "casos": 125,
+    "Rt": 0.49075308,
+    "media_movel": 83.0
+  },
+  {
+    "data_iniSE": "2023-07-02",
+    "casos": 265,
+    "Rt": 0.8393008,
+    "media_movel": 133.5
+  },
+  {
+    "data_iniSE": "2023-06-25",
+    "casos": 233,
+    "Rt": 0.56749797,
+    "media_movel": 175.0
+  },
+  {
+    "data_iniSE": "2023-06-18",
+    "casos": 263,
+    "Rt": 0.5091784,
+    "media_movel": 221.5
+  },
+  {
+    "data_iniSE": "2023-06-11",
+    "casos": 466,
+    "Rt": 0.698044,
+    "media_movel": 306.75
+  },
+  {
+    "data_iniSE": "2023-06-04",
+    "casos": 451,
+    "Rt": 0.5260426,
+    "media_movel": 353.25
+  },
+  {
+    "data_iniSE": "2023-05-28",
+    "casos": 656,
+    "Rt": 0.66070414,
+    "media_movel": 459.0
+  },
+  {
+    "data_iniSE": "2023-05-21",
+    "casos": 845,
+    "Rt": 0.8354027,
+    "media_movel": 604.5
+  },
+  {
+    "data_iniSE": "2023-05-14",
+    "casos": 1163,
+    "Rt": 1.1686605,
+    "media_movel": 778.75
+  },
+  {
+    "data_iniSE": "2023-05-07",
+    "casos": 945,
+    "Rt": 0.9794955,
+    "media_movel": 902.25
+  },
+  {
+    "data_iniSE": "2023-04-30",
+    "casos": 1036,
+    "Rt": 1.1763444,
+    "media_movel": 997.25
+  },
+  {
+    "data_iniSE": "2023-04-23",
+    "casos": 970,
+    "Rt": 1.3555108,
+    "media_movel": 1028.5
+  },
+  {
+    "data_iniSE": "2023-04-16",
+    "casos": 971,
+    "Rt": 1.8344302,
+    "media_movel": 980.5
+  },
+  {
+    "data_iniSE": "2023-04-09",
+    "casos": 721,
+    "Rt": 1.9355209,
+    "media_movel": 924.5
+  },
+  {
+    "data_iniSE": "2023-04-02",
+    "casos": 490,
+    "Rt": 2.0984256,
+    "media_movel": 788.0
+  },
+  {
+    "data_iniSE": "2023-03-26",
+    "casos": 390,
+    "Rt": 3.2676885,
+    "media_movel": 643.0
+  },
+  {
+    "data_iniSE": "2023-03-19",
+    "casos": 226,
+    "Rt": 4.2607217,
+    "media_movel": 456.75
+  },
+  {
+    "data_iniSE": "2023-03-12",
+    "casos": 85,
+    "Rt": 3.4696515,
+    "media_movel": 297.75
+  },
+  {
+    "data_iniSE": "2023-03-05",
+    "casos": 34,
+    "Rt": 3.2147932,
+    "media_movel": 183.75
+  },
+  {
+    "data_iniSE": "2023-02-26",
+    "casos": 27,
+    "Rt": 5.63288,
+    "media_movel": 93.0
+  },
+  {
+    "data_iniSE": "2023-02-19",
+    "casos": 3,
+    "Rt": 0.7263183,
+    "media_movel": 37.25
+  },
+  {
+    "data_iniSE": "2023-02-12",
+    "casos": 3,
+    "Rt": 0.57733214,
+    "media_movel": 16.75
+  },
+  {
+    "data_iniSE": "2023-02-05",
+    "casos": 5,
+    "Rt": 0.7410472,
+    "media_movel": 9.5
+  },
+  {
+    "data_iniSE": "2023-01-29",
+    "casos": 3,
+    "Rt": 0.45344782,
+    "media_movel": 3.5
+  },
+  {
+    "data_iniSE": "2023-01-22",
+    "casos": 9,
+    "Rt": 1.9525403,
+    "media_movel": 5.0
+  },
+  {
+    "data_iniSE": "2023-01-15",
+    "casos": 8,
+    "Rt": 2.98295,
+    "media_movel": 6.25
+  },
+  {
+    "data_iniSE": "2023-01-08",
+    "casos": 4,
+    "Rt": 2.6541805,
+    "media_movel": 6.0
+  },
+  {
+    "data_iniSE": "2023-01-01",
+    "casos": 2,
+    "Rt": 2.8037329,
+    "media_movel": 5.75
+  },
+  {
+    "data_iniSE": "2022-12-25",
+    "casos": 2,
+    "Rt": 2.6373806,
+    "media_movel": 4.0
+  },
+  {
+    "data_iniSE": "2022-12-18",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 2.0
+  },
+  {
+    "data_iniSE": "2022-12-11",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 1.0
+  },
+  {
+    "data_iniSE": "2022-12-04",
+    "casos": 2,
+    "Rt": 1.6161089,
+    "media_movel": 1.0
+  },
+  {
+    "data_iniSE": "2022-11-27",
+    "casos": 3,
+    "Rt": 6.421154,
+    "media_movel": 1.25
+  },
+  {
+    "data_iniSE": "2022-11-20",
+    "casos": 1,
+    "Rt": 2.3936357,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-11-13",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-11-06",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 1.0
+  },
+  {
+    "data_iniSE": "2022-10-30",
+    "casos": 1,
+    "Rt": 0.36940253,
+    "media_movel": 0.5
+  },
+  {
+    "data_iniSE": "2022-10-23",
+    "casos": 2,
+    "Rt": 0.80526507,
+    "media_movel": 0.75
+  },
+  {
+    "data_iniSE": "2022-10-16",
+    "casos": 3,
+    "Rt": 2.1868608,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-10-09",
+    "casos": 4,
+    "Rt": 6.5022116,
+    "media_movel": 2.5
+  },
+  {
+    "data_iniSE": "2022-10-02",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 2.25
+  },
+  {
+    "data_iniSE": "2022-09-25",
+    "casos": 1,
+    "Rt": 6.0045605,
+    "media_movel": 2.0
+  },
+  {
+    "data_iniSE": "2022-09-18",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 1.25
+  },
+  {
+    "data_iniSE": "2022-09-11",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 0.25
+  },
+  {
+    "data_iniSE": "2022-09-04",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 0.25
+  },
+  {
+    "data_iniSE": "2022-08-28",
+    "casos": 2,
+    "Rt": 1.7279825,
+    "media_movel": 0.5
+  },
+  {
+    "data_iniSE": "2022-08-21",
+    "casos": 1,
+    "Rt": 0.6754095,
+    "media_movel": 0.75
+  },
+  {
+    "data_iniSE": "2022-08-14",
+    "casos": 1,
+    "Rt": 0.54537046,
+    "media_movel": 1.0
+  },
+  {
+    "data_iniSE": "2022-08-07",
+    "casos": 1,
+    "Rt": 0.5051701,
+    "media_movel": 1.25
+  },
+  {
+    "data_iniSE": "2022-07-31",
+    "casos": 3,
+    "Rt": 0.86338603,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-07-24",
+    "casos": 1,
+    "Rt": 0.17518331,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-07-17",
+    "casos": 1,
+    "Rt": 0.1585397,
+    "media_movel": 1.5
+  },
+  {
+    "data_iniSE": "2022-07-10",
+    "casos": 10,
+    "Rt": 1.578976,
+    "media_movel": 3.75
+  },
+  {
+    "data_iniSE": "2022-07-03",
+    "casos": 4,
+    "Rt": 0.6209936,
+    "media_movel": 4.0
+  },
+  {
+    "data_iniSE": "2022-06-26",
+    "casos": 8,
+    "Rt": 1.0422363,
+    "media_movel": 5.75
+  },
+  {
+    "data_iniSE": "2022-06-19",
+    "casos": 5,
+    "Rt": 0.46911317,
+    "media_movel": 6.75
+  },
+  {
+    "data_iniSE": "2022-06-12",
+    "casos": 7,
+    "Rt": 0.42979595,
+    "media_movel": 6.0
+  },
+  {
+    "data_iniSE": "2022-06-05",
+    "casos": 10,
+    "Rt": 0.40665045,
+    "media_movel": 7.5
+  },
+  {
+    "data_iniSE": "2022-05-29",
+    "casos": 13,
+    "Rt": 0.39406127,
+    "media_movel": 8.75
+  },
+  {
+    "data_iniSE": "2022-05-22",
+    "casos": 26,
+    "Rt": 0.631477,
+    "media_movel": 14.0
+  },
+  {
+    "data_iniSE": "2022-05-15",
+    "casos": 34,
+    "Rt": 0.6951345,
+    "media_movel": 20.75
+  },
+  {
+    "data_iniSE": "2022-05-08",
+    "casos": 38,
+    "Rt": 0.6817453,
+    "media_movel": 27.75
+  },
+  {
+    "data_iniSE": "2022-05-01",
+    "casos": 56,
+    "Rt": 0.93237203,
+    "media_movel": 38.5
+  },
+  {
+    "data_iniSE": "2022-04-24",
+    "casos": 46,
+    "Rt": 0.89478576,
+    "media_movel": 43.5
+  },
+  {
+    "data_iniSE": "2022-04-17",
+    "casos": 77,
+    "Rt": 2.2618005,
+    "media_movel": 54.25
+  },
+  {
+    "data_iniSE": "2022-04-10",
+    "casos": 56,
+    "Rt": 2.7075906,
+    "media_movel": 58.75
+  },
+  {
+    "data_iniSE": "2022-04-03",
+    "casos": 29,
+    "Rt": 2.1260393,
+    "media_movel": 52.0
+  },
+  {
+    "data_iniSE": "2022-03-27",
+    "casos": 16,
+    "Rt": 1.9403937,
+    "media_movel": 44.5
+  },
+  {
+    "data_iniSE": "2022-03-20",
+    "casos": 16,
+    "Rt": 3.5212677,
+    "media_movel": 29.25
+  },
+  {
+    "data_iniSE": "2022-03-13",
+    "casos": 7,
+    "Rt": 2.011538,
+    "media_movel": 17.0
+  },
+  {
+    "data_iniSE": "2022-03-06",
+    "casos": 2,
+    "Rt": 0.68328553,
+    "media_movel": 10.25
+  },
+  {
+    "data_iniSE": "2022-02-27",
+    "casos": 4,
+    "Rt": 2.2867658,
+    "media_movel": 7.25
+  },
+  {
+    "data_iniSE": "2022-02-20",
+    "casos": 4,
+    "Rt": 3.2310882,
+    "media_movel": 4.25
+  },
+  {
+    "data_iniSE": "2022-02-13",
+    "casos": 1,
+    "Rt": 0.66784465,
+    "media_movel": 2.75
+  },
+  {
+    "data_iniSE": "2022-02-06",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 2.25
+  },
+  {
+    "data_iniSE": "2022-01-30",
+    "casos": 3,
+    "Rt": 4.286294,
+    "media_movel": 2.0
+  },
+  {
+    "data_iniSE": "2022-01-23",
+    "casos": 1,
+    "Rt": 1.4390478,
+    "media_movel": 1.25
+  },
+  {
+    "data_iniSE": "2022-01-16",
+    "casos": 0,
+    "Rt": 0.0,
+    "media_movel": 1.0
+  },
+  {
+    "data_iniSE": "2022-01-09",
+    "casos": 1,
+    "Rt": 3.3788157,
+    "media_movel": 1.25
+  },
+  {
+    "data_iniSE": "2022-01-02",
+    "casos": 1,
+    "Rt": 18.521618,
+    "media_movel": 0.75
+  }
+]
