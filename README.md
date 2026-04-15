@@ -27,4 +27,4 @@ Estudos desenvolvidos na disciplina de **Banco de Dados** e afins durante o curs
 
 ---
 
-> Desenvolvido por [Leonardo Zorzi](https://github.com/leomz)
+> Desenvolvido por [Leonardo Zorzi](https://github.com/leozorzii)
