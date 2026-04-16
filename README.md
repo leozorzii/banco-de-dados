@@ -21,10 +21,31 @@ Personal and academic repository focused on relational databases and data scienc
 - Reading and processing JSON and CSV files
 - Exploratory data analysis
 
+## 🚀 Running Python Scripts
+
+**1. Create the virtual environment**
+```bash
+python -m venv .venv
+```
+
+**2. Activate the environment**
+```bash
+# Windows (CMD)
+.venv\Scripts\activate
+
+# Linux/Mac
+source .venv/bin/activate
+```
+
+**3. Install dependencies**
+```bash
+python -m pip install -r requirements.txt
+```
+
 ## 📖 Academic Context
 
 Studies developed in the **Database** and related courses during the Information Systems degree at Universidade Franciscana (UFN).
 
 ---
 
-> Developed by [Leonardo Zorzi](https://github.com/leozorzii)
+> Developed by [Leonardo Zorzi](https://github.com/leomz)
