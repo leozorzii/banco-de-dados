@@ -1,0 +1,113 @@
+
+-- CONTINUACOES DE CONVERSOES
+
+-- calcular a idade da Jennifer
+GO
+SELECT *
+FROM FUNCIONARIO
+-- rever esse ponto para casos de mes
+SELECT DATEDIFF(YEAR, f.Datanasc, GETDATE()) AS 'IDADE DE JENNIFER'
+FROM FUNCIONARIO AS F
+WHERE F.Pnome = 'Pedro'
+-----------------------------------------------------------------------------------------------------------
+--Conversao de dados
+
+-- CAST
+SELECT 'o  '
+		+  f.Pnome 
+		+ ' tem o salario de: R$ ' 
+		+ CAST(f.Salario AS varchar(10)) AS 'SALARIOS', F.Cpf, f.Datanasc
+FROM FUNCIONARIO AS F
+
+-- CONVERT(novo_tipo_dados)
+--converter datas ou float para numero real
+
+--converter a data de nascimento de Jennifer para o padrao BR(103)
+SELECT 'o  '
+		+  f.Pnome 
+		+ ' tem o salario de: R$ ' 
+		+ CONVERT(VARCHAR(10), F.salario) AS 'SALARIOS', F.Cpf, f.Datanasc
+FROM FUNCIONARIO AS F
+
+GO
+DECLARE @date DATE
+
+SELECT @date = f.Datanasc
+FROM FUNCIONARIO AS F 
+WHERE f.Pnome = 'Jennifer'
+
+PRINT 'Data formatada: ' + CONVERT(VARCHAR(10), @date, 103);
+PRINT 'Data Normal do Banco: ' + CAST (@date AS VARCHAR(10));
+GO
+-- IF ELSE 
+
+-- verificar se um funcionario Recebe Abaixo da Média Salarial
+DECLARE @mediaSalarial DECIMAL(10,2), @salarioFuncionario DECIMAL(10,2), @nome VARCHAR(100) = 'Jennifer'
+
+
+SELECT @salarioFuncionario = Salario
+FROM FUNCIONARIO
+WHERE Pnome = @nome
+
+SELECT @mediaSalarial = AVG(F.Salario)
+FROM FUNCIONARIO AS F
+
+IF @salarioFuncionario < @mediaSalarial
+	BEGIN 
+		PRINT '-- SALARIO ABAIXO DA MEDIA SALARIAL --'
+		PRINT 'Media Salarial: ' + CAST(@mediaSalarial AS VARCHAR(10))
+		PRINT 'Salario do Funcionario: ' + CAST(@salarioFuncionario AS VARCHAR(10))
+	END
+ELSE
+	BEGIN
+		PRINT '-- SALARIO ACIMA DA MEDIA SALARIAL --'
+		PRINT 'Media Salarial: ' + CAST(@mediaSalarial AS VARCHAR(10))
+		PRINT 'Salario do Funcionario: ' + CAST(@salarioFuncionario AS VARCHAR(10))
+	END;
+	GO
+	-- verificar a idade
+	DECLARE @data_nasc DATE, @idade INT, @dia_nasc INT, @hoje INT, @mes_nasc INT, @mes INT 
+
+SELECT @data_nasc = DataNasc FROM FUNCIONARIO AS F WHERE F.Pnome = 'Ronaldo' 
+
+SET @mes_nasc = MONTH(@data_nasc) 
+SET @mes = MONTH(GETDATE()) 
+
+SET @dia_nasc = DAY(@data_nasc) 
+SET @hoje = DAY(GETDATE()) 
+
+
+IF (@mes_nasc > @mes OR (@mes_nasc = @mes AND @dia_nasc > @hoje)) 
+    SET @idade = DATEDIFF(YEAR, @data_nasc, GETDATE()) - 1
+ELSE 
+    SET @idade = DATEDIFF(YEAR, @data_nasc, GETDATE())
+
+PRINT(@idade)
+
+-- verificar se um funcionario ja recebeu bonus este ano
+DECLARE @recebeu_bonus INT
+
+SELECT F.Bonus
+FROM FUNCIONARIO AS F
+WHERE f.Pnome = 'Ana'
+PRINT @recebeu_bonus
+IF (@recebeu_bonus IS NULL OR @recebeu_bonus <= 0)
+	PRINT 'NUNCA RECEBEU BONUS'
+ELSE
+	PRINT 'RECEBEU BONUS
+	'
+-- iif
+SELECT f.Pnome, f.Salario, f.Unome,
+IIF(f.Salario>=30000,'Ganha Muito', 'Ganha Pouco') AS 'Classificação'
+FROM FUNCIONARIO AS F
+ORDER BY f.Pnome
+
+--CASE
+SELECT f.Pnome, f.Salario, f.Unome,
+CASE
+	WHEN F.Salario <= 8000 THEN 'Baixo'
+	WHEN F.Salario > 8000 AND F.Salario < 30000 THEN 'Médio'
+	WHEN F.Salario >= 30000 THEN 'Alto'
+END AS 'CATEGORIA'
+FROM FUNCIONARIO AS F
+ORDER BY F.Salario DESC
