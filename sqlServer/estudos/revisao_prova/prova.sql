@@ -26,7 +26,7 @@ SELECT F.Pnome, F.Salario
 FROM FUNCIONARIO AS F
 ORDER BY F.Salario DESC
 --7 Liste os três funcionários com os maiores salários usando TOP.
-SELECT TOP 10 F.Salario, F.Pnome 
+SELECT TOP 3 F.Salario, F.Pnome 
 FROM FUNCIONARIO AS F
 ORDER BY F.Salario DESC
 --8 Liste os funcionários que não possuem supervisor.
@@ -123,8 +123,10 @@ ORDER BY Salario ASC
 -- 24 Liste os funcionários que trabalham no projeto ProdutoX.
     SELECT F.Pnome AS 'PESSOAS', P.Projnome AS 'NOME PROJETO'
     FROM FUNCIONARIO AS F
+    INNER JOIN TRABALHA_EM AS T
+        ON T.Fcpf = f.cpf
     INNER JOIN PROJETO AS P
-    ON F.Dnr = P.Dnum
+        ON T.Pnr = P.Projnumero
     WHERE P.Projnome = 'ProdutoX'
 -- 25 Liste o número do projeto, departamento responsável, sobrenome e endereço do gerente para projetos localizados em Mauá.
     SELECT P.Projnumero AS 'NUMERO DEPARTAMENTO', D.Dnome AS 'NOME DO DP', F.Unome AS 'SOBRENOME', F.Endereco AS 'ENDERECO'
@@ -139,8 +141,8 @@ ORDER BY Salario ASC
 -- 26 Liste o sobrenome dos funcionários e o sobrenome dos seus respectivos supervisores. Use autorrelacionamento com a tabela FUNCIONARIO.
     SELECT F.Unome AS 'FUNCIONARIO', S.Unome AS 'SUPERVISOR RESPONSAVEL'
     FROM FUNCIONARIO AS F
-    INNER JOIN FUNCIONARIO AS S
-        ON F.Cpf = S.Cpf_supervisor
+    LEFT JOIN FUNCIONARIO AS S
+        ON S.Cpf_supervisor = F.Cpf
 -- 27 Liste os departamentos que não possuem funcionários associados usando LEFT JOIN.
     SELECT D.Dnome AS 'NAO POSSUEM FUNCIONARIOS'
     FROM DEPARTAMENTO AS D
@@ -148,8 +150,12 @@ ORDER BY Salario ASC
         ON D.Dnumero = F.Dnr
     WHERE F.Pnome IS NULL
 -- 28 Liste todos os funcionários, mesmo aqueles que não possuem departamento.
-    SELECT f.Pnome AS 'Todos os funcionarios', f.Dnr
+    SELECT f.Pnome AS 'Todos os funcionarios', D.Dnome AS 'NOME DEPARTAMENTO'
     FROM FUNCIONARIO AS F
+    LEFT JOIN
+    DEPARTAMENTO AS D
+        ON F.Dnr = D.Dnumero
+
 -- 29 Liste os funcionários que não possuem dependentes.
     SELECT F.Pnome AS 'FUNCIONARIOS SEM DEPENDENTES'
     FROM FUNCIONARIO AS F
@@ -186,13 +192,13 @@ INTERSECT -- cruzar entre tabelas
 -- 34 Liste os funcionários que não são gerentes usando EXCEPT.
  SELECT F.Pnome AS 'FUNCIONARIOS NAO GERENTES'
  FROM FUNCIONARIO AS F
- WHERE F.Cpf NOT IN
+ WHERE F.Cpf IN
  (
  SELECT F.Cpf
     FROM FUNCIONARIO AS F
-INTERSECT -- cruzar entre tabelas
+EXCEPT 
  SELECT D.Cpf_gerente
-    FROM DEPARTAMENTO AS D
+    FROM DEPARTAMENTO AS D --subtrai os CPFs que sao gerentes de Departamentos
  )
 -- 35 Faça um FULL JOIN entre funcionários e departamentos e observe os registros sem correspondência.
     SELECT *
@@ -208,34 +214,153 @@ INTERSECT -- cruzar entre tabelas
 -- Parte 4: Subconsultas e operadores
 
 -- 36 Liste os funcionários que trabalham em algum projeto que também possui o funcionário Fernando.
-
+    SELECT DISTINCT f.Pnome
+    FROM TRABALHA_EM AS T
+    INNER JOIN FUNCIONARIO AS F
+        ON T.Fcpf = F.cpf
+    WHERE T.Pnr IN (
+        -- Esse select mostra todos os DPs que funcionarios participam junto do fernando
+        SELECT T2.pnr 
+        FROM TRABALHA_EM AS T2
+        WHERE T2.Fcpf = '33344555587'
+        )AND T.Fcpf <> '33344555587'
+    
 -- 37 Liste os funcionários que ganham mais que qualquer funcionário do departamento Administração usando ANY.
-
+    SELECT F.Pnome, F.Salario
+    FROM FUNCIONARIO AS F
+    WHERE F.Salario > ANY( --compara o salario com qualquer um dos valores retornados pela subconsulta
+        SELECT FA.Salario
+        FROM FUNCIONARIO AS FA
+        INNER JOIN DEPARTAMENTO AS DP
+            ON F.Dnr = DP.Dnumero
+        WHERE DP.Dnome = 'Administração'
+    );
 -- 38 Liste os funcionários que ganham mais que todos os funcionários do departamento Administração usando ALL.
-
+  SELECT F.Pnome, F.Salario
+    FROM FUNCIONARIO AS F
+    WHERE F.Salario > ALL( --mostra todos os funcionarios que ganham mais no DP de adm
+        SELECT FA.Salario
+        FROM FUNCIONARIO AS FA
+        INNER JOIN DEPARTAMENTO AS DP
+            ON F.Dnr = DP.Dnumero
+        WHERE DP.Dnome = 'Administração'
+    );
 -- 39 Use EXISTS para listar os funcionários que são gerentes de algum departamento.
-
--- 40 Use EXISTS para listar os departamentos que possuem pelo menos um projeto.
-
+    SELECT CONCAT(F.Pnome, ' ', F.Unome) AS 'GERENTES DE DP', F.Salario, D.Dnome
+    FROM FUNCIONARIO AS F
+    INNER JOIN DEPARTAMENTO AS D
+    ON F.Dnr = D.Dnumero
+    WHERE EXISTS(
+        SELECT F.Pnome
+        FROM DEPARTAMENTO AS G
+        WHERE F.Cpf = G.Cpf_gerente
+    ) 
+-- 40 Use EXISTS para listar os departamentos que possuem algum projeto                                                                                                                                                                                                                                                                                                                                          pelo menos um projeto.
+  SELECT D.Dnome AS 'NOME DO DP', P.Projnome AS 'NOME PROJETO'
+    FROM DEPARTAMENTO AS D
+    INNER JOIN PROJETO AS P
+        ON D.Dnumero = P.Dnum
+    WHERE EXISTS(
+        SELECT 1
+        FROM PROJETO AS PJ
+        WHERE D.Dnumero = PJ.Dnum
+    ) 
 -- 41 liste os funcionários que não trabalham em nenhum projeto usando NOT EXISTS.
-
+    SELECT F.Pnome AS 'FUNCIONARIOS QUE NAO TRABALHAM EM NENHUM PROJETO'
+    FROM FUNCIONARIO AS F
+    WHERE NOT EXISTS(
+        SELECT 1
+        FROM TRABALHA_EM AS T
+        WHERE T.Fcpf = F.Cpf -- onde nao existe um cpf de trabalha_em vinculado a funcionario
+    )
 -- Parte 5: Variáveis, IF/ELSE e WHILE
 -- 42 Declare variáveis para armazenar nome, idade, data e salário. Preencha os valores e exiba-os com SELECT.
+DECLARE @nome VARCHAR(50), @idade INT, @data DATE, @salario DECIMAL(10,2) 
+SET @nome = 'Leonardo'
+SET @idade = 20
+SET @data = GETDATE()
+SET @salario = 2000.00
+SELECT CONCAT ('NOME: ', @nome, ' IDADE: ', @idade, ' DATA DE HOJE: ', @data, ' SALARIO: ', @salario) AS 'MEUS DADOS DE VARIAVEIS'
 
 -- 43 Busque o nome do departamento de número 4, armazene em uma variável e mostre o valor com PRINT.
+    SELECT *
+    FROM DEPARTAMENTO AS D
+    DECLARE @nome_dp VARCHAR(50) 
+    SET @nome_dp = 'Administração'
+    PRINT @nome_dp;
 
 -- 44 Calcule um aumento de 10% para o funcionário Jennifer sem alterar o salário no banco.
+    DECLARE @salario_atual DECIMAL(10,2); 
+    DECLARE @salario_aumento DECIMAL(10,2); 
 
--- 45 Calcule a média salarial e informe, usando IF/ELSE, se o salário de um funcionário está acima ou abaixo da média.
+    SELECT @salario_atual = F.Salario
+    FROM FUNCIONARIO AS F
+    WHERE F.Pnome = 'Jennifer'
+    SET @salario_atual = @salario_aumento * 1.10 
+    PRINT CONCAT('SALARIO COM AUMENTO: ', @salario_aumento)
 
+    --caso eu usasse UPDATE
+    BEGIN TRANSACTION;
+
+    UPDATE FUNCIONARIO
+    SET Salario = Salario * 1.10
+    WHERE Pnome = 'Jennifer';
+
+    SELECT Pnome, Salario
+    FROM FUNCIONARIO
+    WHERE Pnome = 'Jennifer';
+
+    ROLLBACK;
+-- 45 Calcule a média salarial e informe, 
+-- usando IF/ELSE, 
+-- se o salário de um funcionário está acima ou abaixo da média.
+    DECLARE  @mediaSalarial DECIMAL(10,2)
+    SELECT @mediaSalarial = AVG(Salario)
+    FROM FUNCIONARIO
+    PRINT @mediaSalarial
+   SELECT Pnome AS 'NOME FUNCIONARIO', Salario,
+    CASE
+        WHEN Salario > @mediaSalarial THEN 'Salário acima da média'
+        ELSE 'Salário abaixo ou igual à média'
+    END AS Classificacao
+FROM FUNCIONARIO;
 -- 46 Verifique se o funcionário Ana recebeu bônus. Considere que bônus NULL ou menor ou igual a zero significa que não recebeu.
-
+    DECLARE @recebeu_bonus DECIMAL(10,2)
+    
+    SELECT @recebeu_bonus = F.Bonus
+    FROM FUNCIONARIO AS F
+    WHERE F.Pnome = 'Ana'
+    PRINT @recebeu_bonus
+    IF(@recebeu_bonus IS NULL OR @recebeu_bonus <= 0)
+        PRINT 'NUNCA RECEBEU BONUS'
+    ELSE
+        PRINT 'JA RECEBEU BONUS'
 -- 47 Use IIF para classificar os funcionários em:
-
 -- Ganha Muito, para salário maior ou igual a 30000;
 -- Ganha Pouco, nos demais casos.
+    SELECT F.Pnome, F.Salario, F.Unome,
+    IIF(F.Salario >= 30000, 'Ganha Muito', 'Ganha Pouco') AS 'CLASSIFICACAO'
+    FROM FUNCIONARIO AS F
+    ORDER BY F.Pnome
 -- Use CASE para classificar os salários:
 -- até 8000: Baixo;
 -- entre 8000 e 30000: Médio;
 -- maior ou igual a 30000: Alto.
+   SELECT
+    CONCAT(F.Pnome,' ', F.Unome) AS 'NOME COMPLETO',
+    F.Salario,
+    CASE
+        WHEN F.Salario <= 8000 THEN 'Baixo'
+        WHEN F.Salario < 30000 THEN 'Medio'
+        ELSE 'Alto'
+    END AS CLASSIFICACAO
+FROM FUNCIONARIO AS F
+ORDER BY F.Salario DESC;
 -- Crie um contador usando WHILE que imprima os números de 1 até 10.
+DECLARE @cont INT = 1;
+
+WHILE @cont <= 10
+BEGIN
+    PRINT CAST(@cont AS VARCHAR)
+    SET @cont = @cont + 1
+END
