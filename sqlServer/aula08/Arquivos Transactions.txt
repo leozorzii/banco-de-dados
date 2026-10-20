@@ -1,0 +1,232 @@
+-- transactions
+-- A atomicidade - nao divisivel
+-- C consistencia - respeitas as constraints do nosso banco, de um estado valido para estado valido
+-- I isolamento - um por vez
+-- D durabilidade - fazer a mudança fisica do Hardware
+USE FACULDADE_2;
+
+-- BEGIN TRANSACTION
+-- COMMIT TRANSACTION
+-- ROLLBACK TRANSCATION
+-- SAVE POINT
+
+BEGIN TRANSACTION;
+DECLARE @nome VARCHAR(100);
+SET @nome = 'Projeto de Software';
+
+IF EXISTS(SELECT 1 FROM DISCIPLINA  WHERE Nome_disciplina = @nome)
+BEGIN
+	ROLLBACK TRANSACTION
+	PRINT 'Ja exise disciplina com esse name: ' + @nome;
+END
+ELSE
+	BEGIN
+		INSERT INTO DISCIPLINA
+		VALUES ('SI2217', @nome, 4, 'SI')
+		COMMIT TRANSACTION;
+		PRINT 'Disciplina Inserida com sucess'
+	END;	
+	SELECT * FROM DISCIPLINA
+
+GO
+-- exemplo bancario
+	CREATE TABLE CONTA(
+		id INT PRIMARY KEY,
+		nome VARCHAR(50),
+		saldo DECIMAL(10,2)
+	)
+	INSERT INTO CONTA(id, nome, saldo)
+	VALUES
+	(10, 'João', 5000),
+	(20, 'Maria', 500)
+	SELECT * FROM CONTA
+GO
+-- realizem uma transferencia 1000 do Joao para Maria
+-- e outra de 2000 de Maria para Joao
+GO
+BEGIN TRANSACTION;
+DECLARE @valor_transferencia2 DECIMAL(10,2) = 1000, @conta_joao INT = 10, @conta_maria INT = 20
+
+	 IF (SELECT saldo FROM CONTA WHERE id = @conta_joao) < @valor_transferencia2
+		BEGIN
+			ROLLBACK TRANSACTION
+			PRINT 'Saldo insuficiente para transacao'
+		END
+	UPDATE CONTA 
+    SET saldo = saldo - @valor_transferencia2 
+    WHERE id = @conta_joao;
+
+    UPDATE CONTA 
+    SET saldo = saldo + @valor_transferencia2
+    WHERE id = @conta_maria;
+
+    COMMIT TRANSACTION;
+   PRINT 'Transferência (João -> Maria) realizada com sucesso no valor de: ' + @valor_transferencia;
+GO
+
+GO
+BEGIN TRANSACTION
+DECLARE @valor_transferencia DECIMAL(10,2) = 2000, @conta_joao INT = 10, @conta_maria INT = 20
+
+	 IF (SELECT saldo FROM CONTA WHERE id = @conta_maria) < @valor_transferencia
+		BEGIN
+			ROLLBACK TRANSACTION
+			PRINT 'Saldo insuficiente para transacao'
+		END
+	UPDATE CONTA 
+    SET saldo = saldo - @valor_transferencia 
+    WHERE id = @conta_maria;
+
+    UPDATE CONTA 
+    SET saldo = saldo + @valor_transferencia 
+    WHERE id = @conta_joao;
+
+    COMMIT TRANSACTION;
+   PRINT 'Transferência (Maria -> Joao) realizada com sucesso no valor de: ' + @valor_transferencia;
+GO
+GO
+--questao feita com um procedure
+	CREATE PROCEDURE usp_transferencia
+	@origem INT,
+	@destino INT,
+	@valor DECIMAL(10,2)
+	AS
+		BEGIN
+			BEGIN TRANSACTION
+			IF((SELECT  saldo FROM CONTA WHERE id = @origem) >= @valor)
+				BEGIN
+					UPDATE CONTA
+					SET saldo = saldo - @valor
+					WHERE id = @origem
+
+
+					UPDATE CONTA
+					SET saldo = saldo + @valor
+					WHERE ID = @destino
+					COMMIT TRAN
+					PRINT 'Saldo atualizado com sucesso'
+				END
+
+			ELSE 
+				BEGIN
+					PRINT 'Saldo insuficiente'
+					ROLLBACK TRANSACTION
+				END
+	END
+GO
+GO
+-- JOAO PARA MARIA
+EXEC dbo.usp_transferencia 10, 20, 1000
+
+-- AGORA MARIA PARA JOAO
+EXEC dbo.usp_transferencia 20, 10, 2000
+
+-- maria para um cara aleatorio que nao existe
+EXEC dbo.usp_transferencia 20, 50, 500
+GO
+SELECT * FROM CONTA
+
+--variaveis ROWCOUNT E ERRO
+	INSERT INTO CONTA(id, nome, saldo)
+	VALUES
+	(30, 'João', 600),
+	(40, 'Maria', 50000)
+	SELECT * FROM CONTA
+
+	-- maria fez um deposito
+BEGIN TRANSACTION
+DECLARE @qtd_rows INT = 0;
+	UPDATE CONTA
+	SET saldo = saldo + 1000 WHERE nome = 'João'
+	SET @qtd_rows = @qtd_rows + @@ROWCOUNT
+IF (@qtd_rows > 1) 
+	BEGIN 
+		ROLLBACK TRAN;
+		PRINT 'Update desfeito. Linhas afetadas: ' + CAST(@qtd_rows AS VARCHAR)
+	END
+
+	ELSE
+		COMMIT TRANSACTION
+		PRINT 'update aplicado'
+
+		SELECT * FROM CONTA;
+
+
+		-- ERROR
+BEGIN TRANSACTION
+DECLARE @erro INT = 0;
+
+INSERT INTO DISCIPLINA
+	VALUES('SI1001', 'Interface-Humano-Computador', 4, 'SI')
+	SET @erro = @@ERROR + @erro
+INSERT INTO DISCIPLINA
+	VALUES('SI10669', 'Inteligencia Artificial', 4, 'SI')
+	SET @erro = @@ERROR + @erro
+INSERT INTO DISCIPLINA
+	VALUES('SI10999', 'Lógica de Programação', 4, 'SI')
+	SET @erro = @@ERROR + @erro
+IF(@erro <> 0)
+	BEGIN
+		PRINT 'Inserções revertidas'
+		ROLLBACK TRAN
+	END
+ELSE
+	BEGIN
+		PRINT 'Inserções realizadas com sucesso'
+		COMMIT TRAN
+	END
+
+SELECT * FROM DISCIPLINA
+
+-- SAVE POINT
+--1 COMANDO
+BEGIN TRAN
+INSERT INTO CONTA
+VALUES(150, 'Pedro', 550);
+-- SAVE POINT
+SAVE TRANSACTION insertOK
+-- 2 COMANDO
+UPDATE CONTA
+SET saldo = 500
+WHERE nome = 'Maria'
+IF @@ROWCOUNT > 1
+	BEGIN
+		ROLLBACK insertOK
+		COMMIT TRAN
+	END
+
+
+SELECT * FROM CONTA
+-- TRY CATCH
+BEGIN TRY
+	PRINT 'tome try catch' ;
+	SELECT 1/0 -- erro
+	PRINT 'n cheguei aqui'
+
+
+END TRY
+BEGIN CATCH
+	PRINT 'deu ERRO'
+
+END CATCH
+
+--refazendo com try catch
+		-- ERROR
+GO
+BEGIN TRAN
+	BEGIN TRY
+		INSERT INTO CONTA VALUES(50, 'PAULO', 550)
+		INSERT INTO CONTA VALUES(60, 'MATHEUS', 550)
+		INSERT INTO CONTA VALUES(70, 'EZEQUIEL', 550)
+		INSERT INTO CONTA VALUES(10, 'JUDAS', 500000)
+		COMMIT TRAN
+	END TRY
+
+	BEGIN CATCH
+		ROLLBACK TRAN
+		PRINT 'Numero do ERRO: ' + CAST(ERROR_NUMBER() AS VARCHAR(10))
+		PRINT 'MSG do ERRO: ' + ERROR_MESSAGE()
+	END CATCH
+GO
+
+SELECT * FROM CONTA
