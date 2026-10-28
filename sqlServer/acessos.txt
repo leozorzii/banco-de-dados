@@ -1,0 +1,76 @@
+CREATE DATABASE LOJA;
+USE LOJA;
+
+CREATE TABLE categoria(
+	id_categoria INT PRIMARY KEY,
+	nome_categoria VARCHAR(60) NOT NULL,
+	CONSTRAINT uq_categori_nome UNIQUE(nome_categoria) --nome da restricao
+);
+GO
+CREATE TABLE fornecedor(
+	id_fornecedor INT PRIMARY KEY,
+	nome_fornecedor VARCHAR(60) NOT NULL,
+	telefone VARCHAR(20) NULL
+);
+GO
+CREATE TABLE produto(
+id_produto INT PRIMARY KEY,
+nome_produto VARCHAR(80) NOT NULL,
+preco DECIMAL(10,2) NOT NULL,
+quantidade INT NOT NULL DEFAULT 0,
+situacao VARCHAR(10) NOT NULL CONSTRAINT df_prod_sit DEFAULT 'ativo', -- se ele nao passar a info do produto, ele cria automaticamente como 'ativo'
+id_categoria INT NOT NULL,
+id_fornecedor INT NULL,
+
+
+CONSTRAINT ck_prod_preco CHECK (preco > 0),
+CONSTRAINT ck_prod_qtd CHECK (quantidade >= 0),
+CONSTRAINT ck_prod_situacao CHECK (situacao in ('ATIVO','INATIVO')),
+
+-- restricao de chave estrangeira
+CONSTRAINT fk_produto_categoria
+	FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+-- exemplo de incluir restrição apos criação da tabela
+ALTER TABLE PRODUTO
+ADD CONSTRAINT fk_produto_fornecedor
+	FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE
+GO
+
+
+INSERT INTO categoria (id_categoria, nome_categoria) VALUES
+(10, 'Informatica'),
+(20, 'Papelaria'),
+(30, 'Acessorios')
+
+INSERT INTO fornecedor(id_fornecedor, nome_fornecedor, telefone) VALUES
+	(1,'Moura', '5555-1111'),
+	(2, 'Amazon', NULL)
+
+INSERT INTO produto(id_produto, nome_produto, preco, quantidade, situacao, id_categoria, id_fornecedor) 
+VALUES 
+(1001, 'Mouse com fio', 249.99, -15, 'ATIVO', 10, 1), 
+(1002, 'Teclado mecanico', 419.99, 15, 'ATIVO', 10, 1), 
+(1003, 'Caderno', 25.00, 10, 'ATIVO', 20, 1), 
+(1004, 'Caneta', 2.50, 500, 'ATIVO', 20, 1), 
+(1005, 'Bateria M60GD', 397.97, 5, 'ATIVO', 30, 1);
+
+INSERT INTO produto(id_produto, nome_produto, preco, id_categoria)
+VALUES (1006, 'NoBreack', 300.00, 30)
+
+SELECT * FROM produto
+
+-- ON UPDATE CASCADE
+UPDATE categoria
+SET id_categoria = 99
+WHERE id_categoria = 30;
+
+--ON DELETE SET NULL
+DELETE FROM fornecedor WHERE id_fornecedor = 100;
+
+-- ON DELETE CASCADE
+DELETE FROM categoria WHERE id_categoria = 20;
