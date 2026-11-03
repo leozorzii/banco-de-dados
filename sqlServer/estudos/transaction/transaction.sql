@@ -63,11 +63,12 @@ WHERE Cpf = '45345345376'
 GO
 BEGIN TRANSACTION
 DECLARE @cpf VARCHAR(11)
-SET @cpf = '2422324234233'
+SET @cpf = '12312312311'
 IF EXISTS(SELECT 1 FROM FUNCIONARIO WHERE Cpf = @cpf)
 BEGIN
     UPDATE FUNCIONARIO
-    SET Salario = Salario + 2000
+    -- SET Salario = Salario + 2000 - da pra fazer assim tbm se nao pedir coluna do banco
+    SET Bonus = ISNULL(Bonus, 0) + 2000   -- bônus, não salário
     WHERE Cpf = @cpf
     PRINT 'Bonus aplicado'
     COMMIT TRAN;
@@ -78,6 +79,9 @@ ELSE
         PRINT 'Funcionario nao encontrado'
     END
 GO
+SELECT Pnome, Salario, Bonus
+FROM FUNCIONARIO
+WHERE Cpf = '12312312311';
 
 
 
@@ -99,6 +103,7 @@ BEGIN TRANSACTION
 BEGIN TRY
     DELETE DEPARTAMENTO
     WHERE Dnumero = 5
+    COMMIT TRAN;
 END TRY
 BEGIN CATCH
     ROLLBACK;
