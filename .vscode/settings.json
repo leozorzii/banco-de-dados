@@ -1,0 +1,34 @@
+{
+  "mssql.connections": [
+    {
+      "profileName": "BIBLIOTECA (local)",
+      "server": "localhost",
+      "database": "BIBLIOTECA",
+      "authenticationType": "Integrated",
+      "encrypt": "Mandatory",
+      "trustServerCertificate": true,
+      "groupId": "ROOT",
+      "id": "9a8bc2da-9f4d-4605-a67e-3c6633183a40"
+    },
+    {
+      "profileName": "MICROSOFT (local)",
+      "server": "localhost",
+      "database": "MICROSOFT",
+      "authenticationType": "Integrated",
+      "encrypt": "Mandatory",
+      "trustServerCertificate": true,
+      "groupId": "ROOT",
+      "id": "3f1d6e2a-7c4b-4e8a-9b52-1a6d0c8e4f71"
+    },
+    {
+      "profileName": "EMPRESA (local)",
+      "server": "localhost",
+      "database": "EMPRESA",
+      "authenticationType": "Integrated",
+      "encrypt": "Mandatory",
+      "trustServerCertificate": true,
+      "groupId": "ROOT",
+      "id": "b7e2c4d1-5a3f-4c9e-8d16-2f0a9e7b3c58"
+    }
+  ]
+}
